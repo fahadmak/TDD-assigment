@@ -3,11 +3,15 @@ import re
 
 def validate_password(password):
     if not password:
-        return "Please fill missing password"
+        return "Please fill missing fields"
     if re.match(re.compile(r'([A-Z][a-z][0-9][!@#$%&*])'), password):
         return password
     return 'Password format is wrong'
 
 
 def validate_user_name(user_name):
-    pass
+    if not user_name:
+        return "Please fill missing fields"
+    if re.match(re.compile(r'([a-z]{4,10})'), user_name):
+        return user_name
+    return 'username format is wrong'
