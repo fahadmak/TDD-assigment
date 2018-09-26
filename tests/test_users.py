@@ -1,6 +1,6 @@
 import unittest
 
-from src.users import validate_password, validate_user_name, validate_email, validate_name
+from src.users import validate_password, validate_user_name, validate_email, validate_name, check_age
 
 
 class TestUser(unittest.TestCase):
@@ -43,7 +43,7 @@ class TestUser(unittest.TestCase):
         valid = validate_email('2johndoe2@mail.co.mhkj')
         self.assertIn('email format is wrong', valid)
 
-    # Tests for checking email
+    # Tests for checking name
     def test_validate_name(self):
         valid = validate_name('Denis Mab')
         self.assertEqual(valid, 'Denis Mab')
@@ -56,3 +56,19 @@ class TestUser(unittest.TestCase):
         valid = validate_name('mail5co')
         self.assertIn('name format is wrong', valid)
 
+    # Tests for checking age
+    def test_check_age(self):
+        valid = check_age(8)
+        self.assertEqual(valid, 8)
+
+    def test_check_age_empty_field(self):
+        valid = check_age('')
+        self.assertIn('Please fill missing fields', valid)
+
+    def test_check_age_wrong_format(self):
+        valid = check_age('mail5co')
+        self.assertIn('age format is wrong', valid)
+
+    def test_check_age_below_zero(self):
+        valid = check_age(-12)
+        self.assertEqual("Age should not be below '0'", valid)
