@@ -108,6 +108,11 @@ class TestUser(unittest.TestCase):
     # Tests for log in user
     def test_login_user(self):
         valid1 = create_user('Denis Mab', 'shgjshsd', 12, 'johndoe@mail.com', 'Ar4@', 'male')
+        valid2 = login('shgjshsd', 'Aq4@')
+        self.assertEqual('username and password do not match', valid2)
+
+    def test_login_user_wrong_credentials(self):
+        valid1 = create_user('Denis Mab', 'shgjshsd', 12, 'johndoe@mail.com', 'Ar4@', 'male')
         valid2 = login('shgjshs', 'Aq4@')
         self.assertEqual('username and password do not match', valid2)
 
@@ -120,16 +125,20 @@ class TestUser(unittest.TestCase):
         self.assertEqual('Please fill in the correct information', valid)
 
     # Tests for edit user
-    def test_edit_user(self):
-        valid1 = create_user('Denis Mab', 'shgjshsd', 12, 'johndoe@mail.com', 'Ar4@', 'male')
-        valid2 = login('shgjshs', 'Aq4@')
-        valid2 = edit_user('fahad2', 'Aq4@')
-        self.assertEqual('User Name and Password do not match', valid2)
+    def test_edit_user_when_logged_in(self):
+        valid = create_user('fahad', 'fahads', 6, 'johndoe@mail.com', 'Aq4@', 'male')
+        valid2 = edit_user('fahads', 'Aq4@', 'fahad2', 'Aq4@')
+        self.assertEqual("User has succesfully edited his username and password", valid2)
+
+    def test_edit_user_when_not_logged_in(self):
+        valid = create_user('fahad', 'benwa', 6, 'johndoe@mail.com', 'Aq4@', 'male')
+        valid2 = edit_user('fahad', 'Aq4@', 'fahad2', 'Aq4@')
+        self.assertEqual('you must be logged in to edit your information', valid2)
 
     def test_edit_user_empty_field(self):
-        valid = edit_user('fahad', '')
+        valid = edit_user('fahad', 'Aq4@', 'fahad', '')
         self.assertEqual('Please fill in the missing fields', valid)
 
     def test_edit_user_wrong_format(self):
-        valid = edit_user('fahad', 67665)
+        valid = edit_user('fahad', 'Aq4@', 'fahad', 67665)
         self.assertEqual('Please fill in the correct information', valid)
