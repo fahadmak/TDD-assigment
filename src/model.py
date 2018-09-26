@@ -36,6 +36,7 @@ class User:
         self.email = email
         self.password = password
         self.gender = gender
+        self.status = False
 
     def __str__(self):
         """A method that Prints the user's name, username and age"""
@@ -52,4 +53,7 @@ class User:
             'gender': self.gender
         }
         return user
+
+    def is_logged_in(self):
+        self.status = True
 
