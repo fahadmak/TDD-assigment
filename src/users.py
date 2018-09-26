@@ -1,53 +1,29 @@
-import re
+from src.model import users, User
+from src.helpers import validate_password, validate_email, validate_user_name, validate_name, \
+    check_sex, check_age, search_user_by_name
+# 400 - means  fill in correct information
+# 401 - Missing fields
 
 
-def validate_password(password):
-    if not password:
-        return "Please fill missing fields"
-    if re.match(re.compile(r'([A-Z][a-z][0-9][!@#$%&*])'), password):
-        return password
-    return 'Password format is wrong'
+def create_user(name, username, age, email, password, gender):
+    valid_name = validate_name(name)
+    valid_username = validate_user_name(username)
+    valid_age = check_age(age)
+    valid_email = validate_email(email)
+    valid_password = validate_password(password)
+    valid_sex = check_sex(gender)
+    if 400 in [valid_name, valid_sex, valid_username, valid_password, valid_email, valid_age]:
+        return "Please fill in the correct information"
+    if 401 in [valid_name, valid_sex, valid_username, valid_password, valid_email, valid_age]:
+        return "Please fill in the missing fields"
+    if valid_name == valid_username:
+        return "username should not be the  same as the name"
+    user_name = search_user_by_name(username)
+    if user_name:
+        return "The User name already exists"
+    user_id = max([user.to_dict().get('user_id') for user in users]) + 1 if users else 1
+    user = User(user_id, name, username, age, email, password, gender)
+    users.append(user)
+    return "{user.name} user has been created ".format(user=user)
 
-
-def validate_user_name(user_name):
-    if not user_name:
-        return "Please fill missing fields"
-    if re.match(re.compile(r'([a-z]{4,10})'), user_name):
-        return user_name
-    return 'username format is wrong'
-
-
-def validate_email(email):
-    if not email:
-        return "Please fill missing fields"
-    if re.match(re.compile(r'[a-z-]+@[^.].*\.[a-z]{2,10}$'), email):
-        return email
-    return 'email format is wrong'
-
-
-def validate_name(names):
-    if not names:
-        return "Please fill missing fields"
-    for name in names.split(' '):
-        if not name.isalpha():
-            return 'name format is wrong'
-    return names
-
-
-def check_age(age):
-    if not age:
-        return "Please fill missing fields"
-    if not isinstance(age, int):
-        return 'age format is wrong'
-    if age >= 0:
-        return age
-    return "Age should not be below '0'"
-
-
-def check_sex(sex):
-    if not sex:
-        return "Please fill missing fields"
-    if sex in ['male', 'female']:
-        return sex
-    return 'sex format is wrong'
 
