@@ -40,5 +40,6 @@ class TestUser(unittest.TestCase):
         self.assertIn('Please fill missing fields', valid)
 
     def test_validate_email_wrong_format(self):
-        valid = validate_email('johndoe@mail.com')
-        self.assertIn('username format is wrong', valid)
+        valid = validate_email('2johndoe2@mail.co.mhkj')
+        self.assertIn('email format is wrong', valid)
+
