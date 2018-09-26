@@ -43,3 +43,11 @@ def check_age(age):
         return age
     return "Age should not be below '0'"
 
+
+def check_sex(sex):
+    if not sex:
+        return "Please fill missing fields"
+    if sex in ['male', 'female']:
+        return sex
+    return 'sex format is wrong'
+
