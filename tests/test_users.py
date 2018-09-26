@@ -1,7 +1,7 @@
 import unittest
 
 from src.users import validate_password, validate_user_name, validate_email,\
-    validate_name, check_age, check_sex, create_user, edit_user
+    validate_name, check_age, check_sex, create_user, login
 
 
 class TestUser(unittest.TestCase):
@@ -90,6 +90,10 @@ class TestUser(unittest.TestCase):
 
     # Tests for creating user
     def test_create_user(self):
+        valid = create_user('fahad', 'fahads', 6, 'johndoe@mail.com', 'Aq4@', 'male')
+        self.assertEqual('fahad user has been created', valid)
+
+    def test_create_user_user_exists(self):
         valid = create_user('fahad', 'fahad', 6, 'johndoe@mail.com', 'Aq4@', 'male')
         self.assertEqual('username should not be the  same as the name', valid)
 
@@ -101,16 +105,17 @@ class TestUser(unittest.TestCase):
         valid = create_user('Denis Mab', 'shgjshs', 12, 'johndoe@mail.com', 'sjhshs', 'uyu')
         self.assertEqual('Please fill in the correct information', valid)
 
-    # Tests for editing user
-    def test_edit_user(self):
-        valid = edit_user('fahad', 'fahad')
-        self.assertEqual('username should not be the  same as the name', valid)
+    # Tests for log in user
+    def test_login_user(self):
+        valid1 = create_user('Denis Mab', 'shgjshsd', 12, 'johndoe@mail.com', 'Ar4@', 'male')
+        valid2 = login('shgjshs', 'Aq4@')
+        self.assertEqual('User Name and Password do not match', valid2)
 
-    def test_edit_user_empty_field(self):
-        valid = edit_user('fahad', '')
+    def test_login_user_empty_field(self):
+        valid = login('fahad', '')
         self.assertEqual('Please fill in the missing fields', valid)
 
-    def test_edit_user_wrong_format(self):
-        valid = edit_user('fahad', 67665)
+    def test_login_user_wrong_format(self):
+        valid = login('fahad', 67665)
         self.assertEqual('Please fill in the correct information', valid)
-
+    #
