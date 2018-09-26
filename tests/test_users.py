@@ -1,6 +1,6 @@
 import unittest
 
-from src.users import validate_password, validate_user_name
+from src.users import validate_password, validate_user_name, validate_email
 
 
 class TestUser(unittest.TestCase):
@@ -29,3 +29,16 @@ class TestUser(unittest.TestCase):
     def test_validate_username_empty_field(self):
         valid = validate_user_name('')
         self.assertIn('Please fill missing fields', valid)
+
+    # Tests for checking email
+    def test_validate_email(self):
+        valid = validate_email('johndoe@mail.com')
+        self.assertEqual(valid, 'johndoe@mail.com')
+
+    def test_validate_email_empty_field(self):
+        valid = validate_email('')
+        self.assertIn('Please fill missing fields', valid)
+
+    def test_validate_email_wrong_format(self):
+        valid = validate_email('johndoe@mail.com')
+        self.assertIn('username format is wrong', valid)
