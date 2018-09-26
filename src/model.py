@@ -52,6 +52,7 @@ class User:
             'password': self.password,
             'gender': self.gender
         }
+
         return user
 
     def is_logged_in(self):
