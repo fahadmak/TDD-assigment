@@ -33,3 +33,13 @@ def validate_name(names):
             return 'name format is wrong'
     return names
 
+
+def check_age(age):
+    if not age:
+        return "Please fill missing fields"
+    if not isinstance(age, int):
+        return 'age format is wrong'
+    if age >= 0:
+        return age
+    return "Age should not be below '0'"
+
