@@ -52,9 +52,10 @@ def edit_user(user_name, password, new_user_name, new_password):
     user = login(user_name, password)
     if not isinstance(user, User):
         return "you must be logged in to edit your information"
-    for user in users:
-        user.username = new_user_name
-        user.password = new_password
-        return "User has succesfully edited his username and password"
+    user.username = new_user_name
+    user.password = new_password
+    print("User has succesfully edited his username and password")
+    return "User has succesfully edited his username and password"
+
 
 
