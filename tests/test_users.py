@@ -1,6 +1,7 @@
 import unittest
 
-from src.users import validate_password, validate_user_name, validate_email, validate_name, check_age, check_sex
+from src.users import validate_password, validate_user_name, validate_email,\
+    validate_name, check_age, check_sex, create_user, edit_user
 
 
 class TestUser(unittest.TestCase):
@@ -12,11 +13,11 @@ class TestUser(unittest.TestCase):
 
     def test_validate_pass_wrong_format(self):
         valid = validate_password('Ae3')
-        self.assertIn('Password format is wrong', valid)
+        self.assertEqual(400, valid)
 
     def test_validate_pass_empty_field(self):
         valid = validate_password('')
-        self.assertIn('Please fill missing fields', valid)
+        self.assertEqual(401, valid)
 
     #Tests for checking username
     def test_validate_username(self):
@@ -25,11 +26,11 @@ class TestUser(unittest.TestCase):
 
     def test_validate_username_wrong_format(self):
         valid = validate_user_name('fah')
-        self.assertIn('username format is wrong', valid)
+        self.assertEqual(400, valid)
 
     def test_validate_username_empty_field(self):
         valid = validate_user_name('')
-        self.assertIn('Please fill missing fields', valid)
+        self.assertEqual(401, valid)
 
     # Tests for checking email
     def test_validate_email(self):
@@ -38,11 +39,11 @@ class TestUser(unittest.TestCase):
 
     def test_validate_email_empty_field(self):
         valid = validate_email('')
-        self.assertIn('Please fill missing fields', valid)
+        self.assertEqual(401, valid)
 
     def test_validate_email_wrong_format(self):
         valid = validate_email('2johndoe2@mail.co.mhkj')
-        self.assertIn('email format is wrong', valid)
+        self.assertEqual(400, valid)
 
     # Tests for checking name
     def test_validate_name(self):
@@ -51,11 +52,11 @@ class TestUser(unittest.TestCase):
 
     def test_validate_name_empty_field(self):
         valid = validate_name('')
-        self.assertIn('Please fill missing fields', valid)
+        self.assertEqual(401, valid)
 
     def test_validate_name_wrong_format(self):
         valid = validate_name('mail5co')
-        self.assertIn('name format is wrong', valid)
+        self.assertEqual(400, valid)
 
     # Tests for checking age
     def test_check_age(self):
@@ -64,15 +65,15 @@ class TestUser(unittest.TestCase):
 
     def test_check_age_empty_field(self):
         valid = check_age('')
-        self.assertIn('Please fill missing fields', valid)
+        self.assertEqual(401, valid)
 
     def test_check_age_wrong_format(self):
         valid = check_age('mail5co')
-        self.assertIn('age format is wrong', valid)
+        self.assertEqual(400, valid)
 
     def test_check_age_below_zero(self):
         valid = check_age(-12)
-        self.assertEqual("Age should not be below '0'", valid)
+        self.assertEqual(400, valid)
 
     # Tests for checking sex
     def test_check_sex(self):
@@ -81,9 +82,35 @@ class TestUser(unittest.TestCase):
 
     def test_check_sex_empty_field(self):
         valid = check_sex('')
-        self.assertIn('Please fill missing fields', valid)
+        self.assertEqual(401, valid)
 
     def test_check_sex_wrong_format(self):
         valid = check_sex('mail5co')
-        self.assertIn('sex format is wrong', valid)
+        self.assertEqual(400, valid)
+
+    # Tests for creating user
+    def test_create_user(self):
+        valid = create_user('fahad', 'fahad', 6, 'johndoe@mail.com', 'Aq4@', 'male')
+        self.assertEqual('username should not be the  same as the name', valid)
+
+    def test_create_user_empty_field(self):
+        valid = create_user('', 'sskjhskh', 45, 'johndoe@mail.com', 'Aq4@', 'male')
+        self.assertEqual('Please fill in the missing fields', valid)
+
+    def test_create_user_wrong_format(self):
+        valid = create_user('Denis Mab', 'shgjshs', 12, 'johndoe@mail.com', 'sjhshs', 'uyu')
+        self.assertEqual('Please fill in the correct information', valid)
+
+    # Tests for editing user
+    def test_edit_user(self):
+        valid = edit_user('fahad', 'fahad')
+        self.assertEqual('username should not be the  same as the name', valid)
+
+    def test_edit_user_empty_field(self):
+        valid = edit_user('fahad', '')
+        self.assertEqual('Please fill in the missing fields', valid)
+
+    def test_edit_user_wrong_format(self):
+        valid = edit_user('fahad', 67665)
+        self.assertEqual('Please fill in the correct information', valid)
 
