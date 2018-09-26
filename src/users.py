@@ -16,9 +16,20 @@ def validate_user_name(user_name):
         return user_name
     return 'username format is wrong'
 
+
 def validate_email(email):
     if not email:
         return "Please fill missing fields"
     if re.match(re.compile(r'[a-z-]+@[^.].*\.[a-z]{2,10}$'), email):
         return email
     return 'email format is wrong'
+
+
+def validate_name(names):
+    if not names:
+        return "Please fill missing fields"
+    for name in names.split(' '):
+        if not name.isalpha():
+            return 'name format is wrong'
+    return names
+
