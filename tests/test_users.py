@@ -1,6 +1,6 @@
 import unittest
 
-from src.users import validate_password, validate_user_name, validate_email
+from src.users import validate_password, validate_user_name, validate_email, validate_name
 
 
 class TestUser(unittest.TestCase):
@@ -19,8 +19,8 @@ class TestUser(unittest.TestCase):
 
     #Tests for checking username
     def test_validate_username(self):
-        valid = validate_user_name('fahad')
-        self.assertEqual(valid, 'fahad')
+        valid = validate_user_name('fahad2#')
+        self.assertEqual(valid, 'fahad2#')
 
     def test_validate_username_wrong_format(self):
         valid = validate_user_name('fah')
@@ -42,4 +42,17 @@ class TestUser(unittest.TestCase):
     def test_validate_email_wrong_format(self):
         valid = validate_email('2johndoe2@mail.co.mhkj')
         self.assertIn('email format is wrong', valid)
+
+    # Tests for checking email
+    def test_validate_name(self):
+        valid = validate_name('Denis Mab')
+        self.assertEqual(valid, 'Denis Mab')
+
+    def test_validate_name_empty_field(self):
+        valid = validate_name('')
+        self.assertIn('Please fill missing fields', valid)
+
+    def test_validate_name_wrong_format(self):
+        valid = validate_name('mail5co')
+        self.assertIn('name format is wrong', valid)
 
