@@ -37,10 +37,24 @@ def login(user_name, password):
     for user in users:
         if user_name == user.username and password == user.password:
             user.is_logged_in()
+            print("You are Logged in")
             return user
     return "username and password do not match"
 
 
-def edit_user(user_name, password):
-    pass
+def edit_user(user_name, password, new_user_name, new_password):
+    new_username = validate_user_name(new_user_name)
+    new_password = validate_password(new_password)
+    if 400 in [new_username, new_password]:
+        return "Please fill in the correct information"
+    if 401 in [new_username, new_password]:
+        return "Please fill in the missing fields"
+    user = login(user_name, password)
+    if not isinstance(user, User):
+        return "you must be logged in to edit your information"
+    for user in users:
+        user.username = new_user_name
+        user.password = new_password
+        return "User has succesfully edited his username and password"
+
 
