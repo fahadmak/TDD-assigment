@@ -28,7 +28,8 @@ class User:
             converts a user object to dictionary format
         """
 
-    def __init__(self, name, username, age, email, password, gender):
+    def __init__(self, user_id, name, username, age, email, password, gender):
+        self.user_id = user_id
         self.name = name
         self.username = username
         self.age = age
