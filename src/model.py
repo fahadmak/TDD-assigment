@@ -7,6 +7,8 @@ class User:
 
         Attributes
         ----------
+        user_id : int
+            the id number of the user
         name : str
             the name of the user
         username : str
@@ -19,6 +21,8 @@ class User:
             the password of the user
         gender : str
             the gender of user
+        status : bool
+            the status of activity of user
 
         Methods
         -------
@@ -45,12 +49,14 @@ class User:
     def to_dict(self):
         """A method that converts a user object to dictionary format"""
         user = {
+            'user_id': self.user_id,
             'name': self.name,
             'username': self.username,
             'age': self.age,
             'email': self.email,
             'password': self.password,
-            'gender': self.gender
+            'gender': self.gender,
+            'active': self.status
         }
 
         return user
