@@ -1,6 +1,6 @@
 import re
 
-from src.model import users, User
+from src.model import users
 
 def validate_password(password):
     if not password:
