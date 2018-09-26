@@ -34,9 +34,13 @@ def login(user_name, password):
         return "Please fill in the correct information"
     if 401 in [valid_username, valid_password]:
         return "Please fill in the missing fields"
-    user = match_name_password(valid_username, password)
-    if user:
-        print("You have succesfully logged in")
-        return user
-    return "User Name and Password do not match"
+    for user in users:
+        if user_name == user.username and password == user.password:
+            user.is_logged_in()
+            return user
+    return "username and password do not match"
+
+
+def edit_user(user_name, password):
+    pass
 
